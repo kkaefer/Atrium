@@ -12,28 +12,25 @@
   <?php if ($messages): ?><div id='growl'><?php print $messages; ?></div><?php endif; ?>
 
   <div id='global' class='atrium-skin'><div class='limiter clear-block'>
-    <?php if ($breadcrumb) print $breadcrumb; ?>
-    <?php if (!empty($site_name)): ?><h1 class='site-name atrium-skin'><?php print $site_name ?></h1><?php endif; ?>
-    <?php if ($header): ?>
-      <div id='header'><div class='toggle-blocks clear-block'><?php print $header ?></div></div>
+    <?php print $breadcrumb; ?>
+    <?php if ($header || $search_box): ?>
+      <div id='header'><div class='toggle-blocks clear-block'>
+        <?php // if ($search_box) print $search_box; ?>
+        <?php if ($header) print $header; ?>
+      </div></div>
     <?php endif; ?>
-  </div></div>
-
-  <div id='branding' class='atrium-skin'><div class='limiter clear-block'>
-    <?php if (!empty($spaces_logo)): ?>
-      <?php print $spaces_logo ?>
-    <?php elseif ($space_title): ?>
-      <h1 class='space-title'><?php print $space_title ?></h1>
-    <?php endif; ?>
-    <?php if ($space_user_links): ?><?php print $space_user_links ?><?php endif; ?>
-    <?php if ($search_box) print $search_box ?>
   </div></div>
 
   <?php if ($primary_links): ?>
   <div id='navigation' class='atrium-skin'><div class='limiter clear-block'>
     <?php if (isset($primary_links)) print theme('links', $primary_links, array('id' => 'features-menu', 'class' => 'links primary-links')) ?>
-    <?php if ($space_tools): ?>
-      <div id='space-tools'><div class='dropdown-blocks toggle-blocks clear-block'><?php print $space_tools ?></div></div>
+    <?php if ($space_tools || $space_user_links): ?>
+      <div id='space-tools'>
+        <?php if ($space_user_links) print $space_user_links; ?>
+        <?php if ($space_tools): ?>
+          <div class='dropdown-blocks toggle-blocks clear-block'><?php print $space_tools ?></div>
+        <?php endif; ?>
+      </div>
     <?php endif; ?>
   </div></div>
   <?php endif; ?>

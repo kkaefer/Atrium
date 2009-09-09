@@ -1429,7 +1429,7 @@ function spaces_preprocess_page(&$vars) {
       $vars['space_admin_links'] = theme('links', $links);
     }
     if ($links = spaces_user_links()) {
-      $vars['space_user_links'] = theme('links', $links);
+      $vars['space_user_links'] = theme('links', $links, array('id' => 'space-user-links', 'class' => 'links'));
     }
     if (!empty($space->title)) {
       $vars['space_title'] = l($space->title, '<front>');

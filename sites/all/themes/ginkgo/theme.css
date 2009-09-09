@@ -49,6 +49,8 @@ body.anonymous-login #page div.limiter { width:560px; }
   body.header-fixed #header div.block-widget a,
   body.header-fixed #header h2.block-title,
   #header h2.block-title:hover { color:#fff !important; }
+  
+  body.header-fixed #header h2.block-title { padding-top:11px; padding-bottom:11px; }
 
   body.header-fixed #header h2.toggle-active,
   body.header-fixed #header h2.toggle-active:hover {
@@ -68,7 +70,7 @@ body.anonymous-login #page div.limiter { width:560px; }
 
   position:fixed;
   z-index:1500;
-  top:40px; left:0px; right:0px; bottom:0px;
+  top:52px; left:0px; right:0px; bottom:0px;
   }
 
 #header div.block-toggle div.block-content a {
@@ -123,7 +125,6 @@ body.anonymous-login #page div.limiter { width:560px; }
 #header div.help p { margin:0px 0px 15px; }
 
 /* Account block */
-body.logged-in #block-atrium_intranet-account h2.block-title { padding-left:5px; }
 #block-atrium_intranet-account h2.block-title div.picture {
   float:left;
   margin-right:5px;
@@ -148,9 +149,10 @@ body.logged-in #block-atrium_intranet-account h2.block-title { padding-left:5px;
  * GLOBAL =============================================================
  */
 #global {
-  background-position:0px -250px;
+  background-position:0px -238px;
   background-repeat:repeat-x;
   position:relative;
+  padding:6px 0;
   line-height:40px;
   height:40px;
   font-size:11px;
@@ -177,49 +179,19 @@ body.logged-in #block-atrium_intranet-account h2.block-title { padding-left:5px;
     display:block;
     }
 
-#global div.breadcrumb { float:left; }
+#global div.breadcrumb { font-size:14px; float:left; }
 #global div.breadcrumb a { font-weight:bold; }
 #global div.breadcrumb span.divider { padding:0px 10px; }
+#global div.breadcrumb img { vertical-align:top; }
+#global div.breadcrumb h1.space-title { float: left; }
 
-/**
- * Branding ===========================================================
- */
-#branding {
-  background-position:0px -120px;
-  background-repeat:repeat-x;
-  padding:5px 0px;
-  line-height:40px;
-  height:40px;
-  }
-
-#branding,
-#branding a,
-#branding input {
-  font-size:11px;
+#global h1.space-title a {
   color:#fff;
-  }
-
-#branding ul.links {
-  line-height:20px;
-  padding:10px 0px 10px 20px;
-  float:left;
-  }
-
-  #branding ul.links a {
-    font-weight:bold;
-    -moz-border-radius:5px;
-    -webkit-border-radius:5px;
-    background:url(images/black40.png);
-    padding:0px 10px;
-    }
-
-#branding h1.space-title a {
   font-size:20px;
   font-weight:300;
-  float:left;
   }
 
-#branding a.spaces-logo {
+#global a.spaces-logo {
   text-indent:-999px;
   overflow:hidden;
 
@@ -230,33 +202,27 @@ body.logged-in #block-atrium_intranet-account h2.block-title { padding-left:5px;
   background-position:0% 50%;
   }
 
-#branding div.search {
-  padding:5px 0px;
-  line-height:30px;
-  height:30px;
-
-  overflow:hidden;
-  float:right;
-  position:relative;
-  }
-
-  #branding form * { display:inline; }
-
-  #branding form input.form-submit {
+  #global form .form-item {
+      float: left;
+    }
+  #global form input.form-submit {
     border:0px;
     color:#fff;
     text-shadow:none;
+    margin-left:0.5em;
+    margin-right:1em;
     background-position:0px 100px;
     background-repeat:no-repeat;
     }
 
-  #branding form input.form-text,
-  #branding form input.form-text:focus {
-    width:150px;
-    padding:5px 5px 5px 25px;
+  #global #atrium-search-form input.form-text,
+  #global #atrium-search-form input.form-text:focus {
+    width: 120px;
+    padding:1px 5px 1px 25px;
+    color:#FFF;
 
     background-color:transparent;
-    background-position:0px -372px;
+    background-position:0px -374px;
     background-repeat:no-repeat;
 
     -moz-border-radius:3px;
@@ -280,15 +246,38 @@ body.logged-in #block-atrium_intranet-account h2.block-title { padding-left:5px;
  * Navigation =========================================================
  */
 #navigation {
-  background-position:0px -170px;
+  background-position:0px -158px;
   background-repeat:repeat-x;
   padding:20px 0px 0px;
   }
+
+#navigation ul#space-user-links {
+  line-height:20px;
+  padding:0 0 0 ;
+  float:left;
+  }
+
+  #navigation ul#space-user-links li {
+    padding:0 0 0 5px;
+    }
+
+  #navigation ul#space-user-links a {
+    font-weight:bold;
+    -moz-border-radius:5px;
+    -webkit-border-radius:5px;
+    background:url(images/black40.png);
+    padding:5px 10px;
+    color:#FFF;
+    }
 
 #space-tools {
   float:right;
   padding:5px 0px;
   }
+
+#space-tools .dropdown-blocks {
+  float:left;
+}
 
 #space-tools div.block-widget,
 #space-tools div.block-widget a {

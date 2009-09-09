@@ -620,7 +620,7 @@ function atrium_theme_registry_alter(&$theme_registry) {
 function atrium_preprocess_page(&$vars) {
   if (user_access('access content') && user_access('search content')) {
     $search = drupal_get_form('atrium_search_form');
-    $vars['search_box'] = "<div class='search clear-block'>{$search}</div>";;
+    $vars['search_box'] = "<div class='search block clear-block'>{$search}</div>";;
   }
 }
 
