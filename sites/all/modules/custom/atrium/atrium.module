@@ -497,10 +497,10 @@ function atrium_update_types($reset = FALSE) {
  * Small API function to make retrieving the human-readable node type
  * name easier.
  */
-function atrium_get_typename($type, $lower = TRUE) {
+function atrium_get_typename($type) {
   $types = node_get_types();
   if (!empty($types[$type])) {
-    return $lower ? strtolower($types[$type]->name) : $types[$type]->name;
+    return $types[$type]->name;
   }
   return FALSE;
 }
