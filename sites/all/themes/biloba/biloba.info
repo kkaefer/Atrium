@@ -1,0 +1,25 @@
+; $Id$
+name = "Biloba"
+description = "A more space-efficient version of Gingko."
+version = "0.1"
+core = "6.x"
+atrium = "1.x"
+engine = "phptemplate"
+base theme = "ginkgo"
+
+stylesheets[screen][] = "biloba.css"
+
+regions[right] = "Right sidebar"
+regions[content] = "Content"
+regions[header] = "Header"
+regions[space_tools] = "Space tools"
+regions[page_tools] = "Page tools"
+
+admin[admin menu] = 0
+admin[admin inline] = 0
+
+features[] = ""
+
+spaces_design_site = "#226688"
+spaces_design_og = "#bb2233"
+spaces_design_user = "#686058"

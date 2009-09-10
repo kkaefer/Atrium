@@ -1,0 +1,48 @@
+/**
+ * Custom skin.
+ */
+.atrium-skin { background-image:url(images/sprite_skin.png); }
+
+#global {
+  background-position:0px -238px;
+  padding:6px 0;
+}
+
+#global h1.site-name { display: none; }
+#global div.breadcrumb { font-size:14px; }
+#global div.breadcrumb img { vertical-align:top; }
+#global div.breadcrumb h1.space-title { float: left; }
+
+#navigation {
+  background-position:0px -158px;
+}
+
+#navigation #space-tools > ul.links {
+  line-height:20px;
+  padding:0 0 0 ;
+  float:left;
+  }
+
+  #navigation #space-tools > ul.links li {
+    padding:0 0 0 5px;
+    }
+
+  #navigation #space-tools > ul.links a {
+    font-weight:bold;
+    -moz-border-radius:5px;
+    -webkit-border-radius:5px;
+    background:url(../ginkgo/images/black40.png);
+    padding:5px 10px;
+    color:#FFF;
+    }
+
+#space-tools .dropdown-blocks {
+  float:left;
+}
+
+body.header-fixed #header h2.block-title {
+  padding-top:11px;
+  padding-bottom:11px;
+  }
+
+#header div.block-toggle div.block-content { top:52px; }
