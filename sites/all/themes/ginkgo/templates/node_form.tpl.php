@@ -1,12 +1,8 @@
 <?php $buttons = !empty($buttons) ? drupal_render($buttons) : ''; ?>
 
-<div class='form <?php print $form_classes ?>'>
+<div class='form clear-block <?php print $form_classes ?>'>
 
 <?php if (!empty($form_message)) print $form_message ?>
-
-<?php if ($sidebar): ?>
-  <div id='right'><div class='sidebar clear-block'><?php print drupal_render($sidebar) ?></div></div>
-<?php endif; ?>
 
 <div id='content'>
   <div class='main clear-block'>
@@ -17,5 +13,9 @@
   </div>
   <?php if ($buttons): ?><div class='buttons clear-block'><?php print $buttons ?></div><?php endif; ?>
 </div>
+
+<?php if ($sidebar): ?>
+  <div id='right'><div class='sidebar clear-block'><?php print drupal_render($sidebar) ?></div></div>
+<?php endif; ?>
 
 </div>

@@ -2,17 +2,63 @@
  * Ginkgo theme stylesheet.
  */
 
-body.tao { background:#eee; }
+body {
+  background:#eee;
+  font-family:Helvetica,Arial,sans-serif;
+  }
 
 .atrium-skin { background-image:url(images/sprite_skin.png); }
-div.limiter { padding:0px 30px; }
+
+div.limiter {
+  max-width:1280px;
+  padding:0px 30px;
+  }
 
 body.anonymous-login #page-header div.limiter,
 body.anonymous-login #page div.limiter { width:560px; }
 
 /**
+ * Global navbar  =====================================================
+ */
+#global {
+  background-position:0px -250px;
+  background-repeat:repeat-x;
+  position:relative;
+  line-height:40px;
+  height:40px;
+  font-size:11px;
+  }
+
+#global a:hover { color:#fff; }
+
+#global h1.site-name {
+  width:120px;
+  height:40px;
+  margin-left:-60px;
+
+  background-position:0px -430px;
+  background-repeat:no-repeat;
+
+  position:absolute;
+  left:50%;
+  top:0px;
+  }
+
+  #global h1.site-name a {
+    text-indent:-999px;
+    overflow:hidden;
+    display:block;
+    }
+
+#global div.breadcrumb { float:left; }
+#global div.breadcrumb a { font-weight:bold; }
+#global div.breadcrumb span.divider { padding:0px 10px; }
+
+/**
  * Header blocks ======================================================
  */
+body.header-fixed #global { z-index:1000; }
+
 #header,
 #header div.toggle-blocks { float:right; }
 
@@ -35,25 +81,28 @@ body.anonymous-login #page div.limiter { width:560px; }
 #header h2.block-title {
   border-left-width:1px;
   border-left-style:solid;
-  padding:5px 15px;
-  line-height:30px;
+  padding:0px 15px;
   color:#fff;
   }
 
   #header div.block-widget a { font-weight:bold; }
 
-  body.header-fixed #header div.block-widget,
-  body.header-fixed #header div.toggle-blocks,
-  body.header-fixed #header h2.block-title { border-color:#444 !important; }
+  /**
+   * These selectors are extremely aggressive to beat out styles in
+   * spaces-design.tpl.php which also have a body class.
+   */
+  body.header-fixed #global #header div.block-widget,
+  body.header-fixed #global #header div.toggle-blocks,
+  body.header-fixed #global #header h2.block-title { border-color:#444; }
 
-  body.header-fixed #header div.block-widget a,
-  body.header-fixed #header h2.block-title,
-  #header h2.block-title:hover { color:#fff !important; }
+  body.header-fixed #global #header div.block-widget a,
+  body.header-fixed #global #header h2.block-title,
+  #global #header h2.block-title:hover { color:#fff; }
 
-  body.header-fixed #header h2.toggle-active,
-  body.header-fixed #header h2.toggle-active:hover {
+  body.header-fixed #global #header h2.toggle-active,
+  body.header-fixed #global #header h2.toggle-active:hover {
     background:url(images/bleeds.png) 0% 100% repeat-x;
-    color:#000 !important;
+    color:#000;
     }
 
 #header div.block-toggle div.block-content {
@@ -78,10 +127,11 @@ body.anonymous-login #page div.limiter { width:560px; }
 
 #header div.block-toggle div.block-content * { border-color:#444; }
 
+#header div.block-toggle div.more-link,
 #header div.block-toggle ul.links li,
 #header div.block-toggle div.item-list li {
   float:left;
-  width:50%;
+  width:49.9999%; /* IE didn't like 50%, and FF seems to round up anyhow. */
   white-space:nowrap;
 
   padding:0px;
@@ -89,6 +139,7 @@ body.anonymous-login #page div.limiter { width:560px; }
   border:0px;
   }
 
+#header div.block-toggle div.more-link a,
 #header div.block-toggle ul.links li a,
 #header div.block-toggle div.item-list li a {
   float:none;
@@ -98,7 +149,10 @@ body.anonymous-login #page div.limiter { width:560px; }
   padding:15px 15px 14px;
   }
 
+  #header div.block-toggle div.more-link a:hover,
   #header div.block-toggle div.block-content li a:hover { background:#222; }
+
+  #header div.block-toggle div.more-link a { font-size:inherit; }
 
 /**
  * Help text
@@ -108,7 +162,6 @@ body.anonymous-login #page div.limiter { width:560px; }
   padding:15px;
   line-height:30px;
   }
-
 #header div.help h1,
 #header div.help h2,
 #header div.help h3 {
@@ -124,9 +177,10 @@ body.anonymous-login #page div.limiter { width:560px; }
 
 /* Account block */
 body.logged-in #block-atrium_intranet-account h2.block-title { padding-left:5px; }
+
 #block-atrium_intranet-account h2.block-title div.picture {
   float:left;
-  margin-right:5px;
+  margin:5px 5px 0px 0px;
   }
 
 #block-atrium_intranet-account div.user-info {
@@ -143,43 +197,6 @@ body.logged-in #block-atrium_intranet-account h2.block-title { padding-left:5px;
   font-size:24px;
   padding:0px 10px;
   }
-
-/**
- * GLOBAL =============================================================
- */
-#global {
-  background-position:0px -250px;
-  background-repeat:repeat-x;
-  position:relative;
-  line-height:40px;
-  height:40px;
-  font-size:11px;
-  }
-
-#global a:hover { color:#fff !important; }
-
-#global h1.site-name {
-  width:120px;
-  height:40px;
-  margin-left:-60px;
-
-  background-position:0px -430px;
-  background-repeat:no-repeat;
-
-  position:absolute;
-  left:50%;
-  top:0px;
-  }
-
-  #global h1.site-name a {
-    text-indent:-999px;
-    overflow:hidden;
-    display:block;
-    }
-
-#global div.breadcrumb { float:left; }
-#global div.breadcrumb a { font-weight:bold; }
-#global div.breadcrumb span.divider { padding:0px 10px; }
 
 /**
  * Branding ===========================================================
@@ -271,10 +288,22 @@ body.logged-in #block-atrium_intranet-account h2.block-title { padding-left:5px;
   font-weight:normal;
   font-size:11px;
   padding:19px 0px 20px;
+  color:#999;
   }
 
-  #footer,
-  #footer a { color:#999; }
+  #footer a { color:#666; }
+
+#footer div.footer-message { float:left; }
+
+#footer ul.links { float:right; }
+
+#footer ul.links a {
+  -moz-border-radius:10px;
+  -webkit-border-radius:10px;
+  padding:0px 10px;
+  }
+
+  #footer ul.links a:hover { background:#fff; }
 
 /**
  * Navigation =========================================================
@@ -283,6 +312,9 @@ body.logged-in #block-atrium_intranet-account h2.block-title { padding-left:5px;
   background-position:0px -170px;
   background-repeat:repeat-x;
   padding:20px 0px 0px;
+  /* IE7 z-index stacking: #navigation 2, #page-header 1, all others 0. */
+  position:relative;
+  z-index:2;
   }
 
 #space-tools {

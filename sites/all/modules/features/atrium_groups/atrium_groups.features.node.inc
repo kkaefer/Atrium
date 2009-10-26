@@ -7,8 +7,8 @@ function _atrium_groups_node_info() {
   $items = array(
     'group' => array(
       'name' => t('Group'),
-      'module' => 'node',
-      'description' => t(''),
+      'module' => 'features',
+      'description' => t('A group space for members to coordinate, collaborate and share ideas.'),
       'has_title' => '1',
       'title_label' => t('Title'),
       'has_body' => '0',
