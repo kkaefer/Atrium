@@ -73,25 +73,39 @@ function ginkgo_preprocess_page(&$vars) {
   // Show site title/emblem ?
   $vars['site_name'] = (isset($settings['emblem']) && !$settings['emblem']) ? '' : $vars['site_name'];
 
-  // Add spaces design CSS back in
-  if (empty($vars['spaces_design_styles'])) {
-    global $theme_info;
-    $space = spaces_get_space();
+  // Footer links
+  $vars['footer_links'] = isset($vars['footer_links']) ? $vars['footer_links'] : array();
+  $item = menu_get_item('admin');
+  if ($item && $item['access']) {
+    $vars['footer_links']['admin'] = $item;
+  }
 
-    // Retrieve default colors from info file
-    if (isset($theme_info->info["spaces_design_{$space->type}"])) {
-      $default = $theme_info->info["spaces_design_{$space->type}"];
+  // IE7 CSS
+  // @TODO: Implement IE styles key in tao.
+  $ie = base_path() . path_to_theme() .'/ie.css';
+  $vars['ie'] = "<!--[if lte IE 8]><style type='text/css' media='screen'>@import '{$ie}';</style><![endif]-->";
+
+  // Add spaces design CSS back in
+  if (!isset($_GET['print'])) {
+    if (empty($vars['spaces_design_styles'])) {
+      global $theme_info;
+      $space = spaces_get_space();
+
+      // Retrieve default colors from info file
+      if (isset($theme_info->info["spaces_design_{$space->type}"])) {
+        $default = $theme_info->info["spaces_design_{$space->type}"];
+      }
+      else {
+        $default = '#3399aa';
+      }
+
+      $color = !empty($settings["color_{$space->type}"]) ? $settings["color_{$space->type}"] : $default;
+      $vars['styles'] .= theme('spaces_design', $color);
+      $vars['attr']['class'] .= ' spaces-design';
     }
     else {
-      $default = '#3399aa';
+      $vars['styles'] .= $vars['spaces_design_styles'];
     }
-
-    $color = !empty($settings["color_{$space->type}"]) ? $settings["color_{$space->type}"] : $default;
-    $vars['styles'] .= theme('spaces_design', $color);
-    $vars['attr']['class'] .= ' spaces-design';
-  }
-  else {
-    $vars['styles'] .= $vars['spaces_design_styles'];
   }
 }
 
@@ -128,6 +142,8 @@ function ginkgo_preprocess_node(&$vars) {
  * Preprocessor for theme_comment().
  */
 function ginkgo_preprocess_comment(&$vars) {
+  // Only show subjects if enabled.
+  $vars['title'] = variable_get("comment_subject_field_{$vars['node']->type}", 1) ? $vars['title'] : '';
   $vars['submitted'] = theme('seed_byline', $vars['comment']);
 
   // We're totally previewing a comment... set a context so others can bail.
@@ -139,16 +155,6 @@ function ginkgo_preprocess_comment(&$vars) {
       $vars = array();
     }
   }
-}
-
-/**
- * Charts theming override.
- */
-function ginkgo_preprocess_flot_views_summary_style(&$vars) {
-  $vars['element']['style'] = "width:auto; height:100px;";
-  $vars['options']->colors = array('#666', '#ccc', '#999');
-  $vars['options']->grid->tickColor = '#eee';
-  $vars['options']->grid->backgroundColor = '#fff';
 }
 
 /**
@@ -396,6 +402,56 @@ function ginkgo_preprocess_views_view_fields(&$vars) {
       $field->class = $class;
     }
   }
+
+  // Write this as a row plugin to allow modules/features to define this stuff.
+  if (get_class($vars['view']->style_plugin) == 'views_plugin_style_list') {
+    $enable_grouping = TRUE;
+
+    // Override arrays for grouping
+    $view_id = "{$vars['view']->name}:{$vars['view']->current_display}";
+    $overrides = array(
+      "atrium_profile:block_1" => array(),
+      "atrium_blog_comments:block_1" => array(
+        'meta' => array('date', 'user-picture', 'username', 'author'),
+      ),
+    );
+    if (isset($overrides[$view_id])) {
+      $groups = $overrides[$view_id];
+    }
+    else {
+      $groups = array(
+        'meta' => array('date', 'user-picture', 'username', 'related-title', 'author'),
+        'admin' => array('edit', 'delete'),
+      );
+    }
+
+    foreach ($vars['fields'] as $id => $field) {
+      $found = FALSE;
+      foreach ($groups as $group => $valid_fields) {
+        if (in_array($field->class, $valid_fields)) {
+          $grouped[$group][$id] = $field;
+          $found = TRUE;
+          break;
+        }
+      }
+      if (!$found) {
+        $grouped['content'][$id] = $field;
+      }
+    }
+
+    // If the listing doesn't have any fields that will be grouped
+    // fallback to default (non-grouped) formatting.
+    $enable_grouping = count($grouped) <= 1 ? FALSE : TRUE;
+    foreach (array_keys($grouped) as $group) {
+      $vars['classes'] .= " grouping-{$group}";
+    }
+  }
+  else {
+    $enable_grouping = FALSE;
+    $grouped = array('content' => $vars['fields']);
+  }
+  $vars['enable_grouping'] = $enable_grouping;
+  $vars['grouped'] = $grouped;
 }
 
 /**
@@ -435,6 +491,9 @@ function _ginkgo_get_views_field_class($handler) {
 
     'numeric' => 'number',
     'count' => 'count',
+
+    'edit' => 'edit',
+    'delete' => 'delete',
   );
   foreach ($search as $needle => $class) {
     if (strpos($handler_class, $needle) !== FALSE) {
@@ -442,5 +501,8 @@ function _ginkgo_get_views_field_class($handler) {
     }
   }
   // Fallback
+  if (!empty($handler->relationship)) {
+    return "related-{$handler->field}";
+  }
   return $handler->field;
 }

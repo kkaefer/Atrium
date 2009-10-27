@@ -65,7 +65,7 @@ function atrium_intranet_strongarm() {
   // FeedAPI
   $conf['feedapi_cron_percentage'] = '25';
   $conf['feedapi_allow_html_all'] = FALSE;
-  $conf['feedapi_allowed_html_tags'] = '<div> <h1> <h2> <h3> <h4> <h5> <h6> <img> <a> <b> <br> <dd> <dl> <dt> <em> <i> <li> <ol> <p> <strong> <u> <ul>';
+  $conf['feedapi_allowed_html_tags'] = '<div> <h1> <h2> <h3> <h4> <h5> <h6> <img> <a> <b> <br> <dd> <dl> <dt> <em> <i> <li> <ol> <p> <strong> <u> <ul> <sup> <sub>';
 
   // Views
   $conf['views_no_hover_links'] = TRUE;
@@ -92,7 +92,7 @@ function atrium_intranet_strongarm() {
   $conf['upload_extensions_2'] =
   $conf['upload_extensions_3'] =
   $conf['upload_extensions_4'] =
-  $conf['upload_extensions_default'] = 'au avi bzip2 csv doc docx flv gif graffle gz htm html iso jpeg jpg mov mp2 mp3 mp4 odp ods odt pages patch pdf png pps ppt pptx psd rar svg swf template tif tgz txt vsd wav wmv xls xlsx zip';
+  $conf['upload_extensions_default'] = 'au avi bzip2 csv doc docx flv gif graffle gz htm html iso jpeg jpg kml kmz mov mp2 mp3 mp4 odp ods odt pages patch pdf png pps ppt pptx psd rar svg swf template tif tgz txt vsd wav wmv xls xlsx zip';
 
   $conf['upload_uploadsize_2'] =
   $conf['upload_uploadsize_3'] =
@@ -113,7 +113,7 @@ function atrium_intranet_strongarm() {
   // Allowed HTML & default filter format settings
   $format = db_result(db_query("SELECT format FROM {filter_formats} WHERE name = '%s'", 'Markdown'));
   if ($format) {
-    $conf["allowed_html_{$format}"] = '<div> <span> <br> <a> <em> <strong> <cite> <code> <strike> <ul> <ol> <li> <dl> <dt> <dd> <img> <blockquote> <p> <h1> <h2> <h3> <h4> <h5> <h6> <table> <caption> <thead> <th> <td> <tr>';
+    $conf["allowed_html_{$format}"] = '<div> <span> <br> <a> <em> <strong> <cite> <code> <strike> <ul> <ol> <li> <dl> <dt> <dd> <img> <blockquote> <p> <h1> <h2> <h3> <h4> <h5> <h6> <table> <caption> <thead> <th> <td> <tr> <sup> <sub>';
     $conf['filter_default_format'] = $format;
   }
 
@@ -379,6 +379,9 @@ function atrium_intranet_403() {
   // If we're in intranet mode, send anonymous users to a login screen.
   global $user;
   if (!$user->uid && !user_access('access content')) {
+    // drupal_access_denied() sets the $_REQUEST['destination'] which will
+    // prevent drupal_goto from behaving as expected. So we unset it.
+    unset($_REQUEST['destination']);
     drupal_goto('user/login', 'destination='. $_REQUEST['q']);
   }
   return "<div class='access-denied'>". t('You are not authorized to access this page.') ."</div>";
